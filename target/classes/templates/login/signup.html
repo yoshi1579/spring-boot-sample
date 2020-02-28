@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <link th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+    <title>Signup</title>
+</head>
+<body class="text-center">
+    <h1>ユーザー登録</h1>
+    <form method="post" action="/signup" th:object="${signupForm}">
+        <label>ユーザーID</label>
+        <input type="text" th:field="*{id}" /><br/>
+        <br/>
+        <label>パスワード</label>
+        <input type="password" th:field="*{password}"/><br/>
+        <br/>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
+            <label>ユーザー名</label>
+            <input type="text" th:field="*{username}"/><br/>
+            <span class="text-danger" th:if="${#fields.hasErrors('username')}"
+                  th:errors="*{username}">
+                username error
+            </span>
+        </div>
+
+        <label>名前</label>
+        <input type="text" th:field="*{name}"/><br/>
+        <br/>
+        <label>誕生日</label>
+        <input type="text" placeholder="yyyy/MM/dd" th:field="*{birthday}"/><br/>
+        <br/>
+        <label>年齢</label>
+        <input type="text" th:field="*{age}"/><br/>
+        <br/>
+        <label>結婚</label>
+        <div th:each="item: ${radioMarriage}">
+            <input type="radio" name="radioMarriage" th:text="${item.key}" th:value="${item.value}" th:field="*{marriage}"/>
+        </div>
+        <br/>
+        <button class="btn btn-primary" type="submit">
+            ユーザー登録
+        </button>
+
+        <ul>
+        <li th:each="error: ${#fields.detailedErrors()}">
+            <span th:text="${error.message}">Error:</span>
+        </li>
+    </ul>
+    </form>
+    <br/>
+
+</body>
+</html>

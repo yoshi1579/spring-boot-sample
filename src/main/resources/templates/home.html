@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>HelloResponse</title>
+</head>
+<body>
+    <h1>ホーム</h1>
+    <ul>
+        <li th:each="user: ${users}">
+            <span th:text="${user.name}"></span>
+        </li>
+    </ul>
+    <div th:text="${count}"></div>
+
+    <div>
+        <form method="post" action="/users/1" th:object="${signupForm}">
+            <input type="hidden" name="_method" value="PATCH" />
+            <label>ユーザーID</label>
+            <input type="text" th:field="*{id}" /><br/>
+            <br/>
+            <label>パスワード</label>
+            <input type="password" th:field="*{password}"/><br/>
+            <br/>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('username')} ? 'has-error'">
+                <label>ユーザー名</label>
+                <input type="text" th:field="*{username}"/><br/>
+            </div>
+
+            <label>名前</label>
+            <input type="text" th:field="*{name}"/><br/>
+            <br/>
+            <label>年齢</label>
+            <input type="text" th:field="*{age}"/><br/>
+            <br/>
+            <br/>
+            <button class="btn btn-primary" type="submit">
+                ユーザー登録
+            </button>
+        </form>
+    </div>
+</body>
+</html>
